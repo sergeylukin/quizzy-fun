@@ -1,0 +1,11 @@
+---
+export function getStaticPaths() {
+  return [
+    { params: { id: '1' } }, // ✅ works => outputs '/a.json'
+    { params: { id: '2' }, props: { author: 'Erika' } },
+    { params: { id: '3' }, props: { author: 'Matthew' } },
+  ]
+}
+---
+
+asdasd

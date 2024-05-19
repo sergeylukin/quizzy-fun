@@ -26,3 +26,6 @@ yarn-error.log*
 
 # package lock
 package-lock.json
+
+# https://github.com/jlarmstrongiv/astro-i18n-aut
+astro_tmp_pages_*

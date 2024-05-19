@@ -4,10 +4,30 @@ import Hero from '../components/Hero.astro'
 import Feature from '../components/Feature.astro'
 import Counter from '../components/Counter.astro'
 import ContentMedia from '../components/ContentMedia.astro'
+import { getLangFromUrl, useTranslations } from '../i18n/utils'
+
+const lang = getLangFromUrl(Astro.url)
+const t = useTranslations(lang)
+
+import { getCollection, getEntry } from 'astro:content'
+const allQuestions = await getCollection('questions')
+const topic = await getEntry('topics', allQuestions[0].data.topic.id)
+console.log(topic)
 ---
 
 <DefaultLayout title="Home">
   <Hero />
+  {
+    allQuestions.map((question) => (
+      <li>
+        <a href={`/my-blog-url/${question.slug}`}>
+          {question.data.title}
+          {question.data.topic}
+        </a>
+        <time datetime={question.data.pubDate.toISOString()}>{question.data.pubDate.toDateString()}</time>
+      </li>
+    ))
+  }
   <section class="my-64">
     <div class="container">
       <h2 class="mb-16 text-6xl">Features</h2>
