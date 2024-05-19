@@ -3,6 +3,9 @@ import Navigation from '../components/Navigation.astro'
 import { SkipLinks } from 'accessible-astro-components'
 import { Icon } from 'astro-icon/components'
 import LanguagePicker from '../components/LanguagePicker.astro'
+import { getLangFromUrl, useTranslatedPath } from '../i18n/utils'
+const lang = getLangFromUrl(Astro.url)
+const translatePath = useTranslatedPath(lang)
 ---
 
 <header>
@@ -10,9 +13,10 @@ import LanguagePicker from '../components/LanguagePicker.astro'
   <LanguagePicker />
   <Navigation>
     <li class="menu-item">
-      <a href="/">Home</a>
+      <a href={translatePath('/')}>Home</a>
     </li>
-    <li class="menu-item">
+    {
+      /*<li class="menu-item">
       <a href="/blog/">Blog</a>
     </li>
     <li class="menu-item has-dropdown">
@@ -36,7 +40,8 @@ import LanguagePicker from '../components/LanguagePicker.astro'
       <a href="https://github.com/markteekman/accessible-astro-starter" title="Go to the GitHub page">
         <Icon name="ion:logo-github" />
       </a>
-    </li>
+    </li>*/
+    }
   </Navigation>
 </header>
 
