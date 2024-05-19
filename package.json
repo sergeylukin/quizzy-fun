@@ -35,6 +35,7 @@
   "dependencies": {
     "@astrojs/alpinejs": "^0.4.0",
     "@astrojs/check": "^0.7.0",
+    "@astrojs/ts-plugin": "^1.8.0",
     "@astrolicious/i18n": "^0.4.2",
     "@types/alpinejs": "^3.13.10",
     "alpinejs": "^3.13.10",

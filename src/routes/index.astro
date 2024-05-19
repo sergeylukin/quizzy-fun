@@ -18,15 +18,19 @@ console.log(topic)
 <DefaultLayout title="Home">
   <Hero />
   {
-    allQuestions.map((question) => (
-      <li>
-        <a href={`/my-blog-url/${question.slug}`}>
-          {question.data.title}
-          {question.data.topic}
-        </a>
-        <time datetime={question.data.pubDate.toISOString()}>{question.data.pubDate.toDateString()}</time>
-      </li>
-    ))
+    allQuestions.map((question) => {
+      // @ts-ignore
+      const { slug } = question
+      return (
+        <li>
+          <a href={`/my-blog-url/${slug}`}>
+            {question.data.title}
+            {question.data.topic}
+          </a>
+          <time datetime={question.data.pubDate.toISOString()}>{question.data.pubDate.toDateString()}</time>
+        </li>
+      )
+    })
   }
   <section class="my-64">
     <div class="container">

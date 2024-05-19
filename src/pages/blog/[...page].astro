@@ -1,4 +1,5 @@
 ---
+import type { CollectionEntry } from 'astro:content'
 import DefaultLayout from '../../layouts/DefaultLayout.astro'
 import { Card, Pagination } from 'accessible-astro-components'
 
@@ -10,6 +11,9 @@ export async function getStaticPaths({ paginate }) {
 }
 
 const { page } = Astro.props
+// @ts-ignore
+const { start, end, data, body, url, currentPage, total, size } = page
+const { next, prev } = url
 ---
 
 <DefaultLayout
@@ -28,30 +32,35 @@ const { page } = Astro.props
   </section>
   <section class="my-12">
     <div class="container">
-      <p class="text-sm"><em>Post {page.start + 1} through {page.end + 1} of {page.total} total posts</em></p>
+      <p class="text-sm"><em>Post {start + 1} through {end + 1} of {total} total posts</em></p>
       <ul class="my-3">
         {
-          page.data.map((post) => (
-            <li>
-              <Card
-                url={'/blog/' + post.title.replaceAll(' ', '-').toLowerCase()}
-                title={post.title}
-                footer={'userId:' + post.userId}
-              >
-                {post.body}
-              </Card>
-            </li>
-          ))
+          Array.isArray(data) ? (
+            // @ts-ignore
+            data.map((post) => (
+              <li>
+                <Card
+                  url={'/blog/' + post.title.replaceAll(' ', '-').toLowerCase()}
+                  title={post.title}
+                  footer={'userId:' + post.userId}
+                >
+                  {body}
+                </Card>
+              </li>
+            ))
+          ) : (
+            <div />
+          )
         }
       </ul>
       <div class="mt-12 grid place-content-center">
         <Pagination
-          firstPage={page.url.prev ? '/blog' : null}
-          previousPage={page.url.prev ? page.url.prev : null}
-          nextPage={page.url.next ? page.url.next : null}
-          lastPage={page.url.next ? `/blog/${Math.round(page.total / page.size)}` : null}
-          currentPage={page.currentPage}
-          totalPages={Math.round(page.total / page.size)}
+          firstPage={prev ? '/blog' : null}
+          previousPage={prev ? prev : null}
+          nextPage={next ? next : null}
+          lastPage={next ? `/blog/${Math.round(total / size)}` : null}
+          currentPage={currentPage}
+          totalPages={Math.round(total / size)}
         />
       </div>
     </div>
