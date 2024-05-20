@@ -1,29 +1,119 @@
 ---
+import { getEntry, getCollection } from 'astro:content'
+import { getLocale } from 'i18n:astro'
+import { useTranslations } from '../../i18n/utils'
+
+const locale = getLocale()
+const t = useTranslations(locale)
+
+const game = await getEntry('common', 'game')
+const { topics } = game.data
+/* const categoriesCollection = await getCollection('common') */
+/* const categories = categoriesCollection.map((c) => c.name) */
+/* const categories = ['asasd', 'qqq'] */
 ---
 
-<form x-data="player" @submit.prevent="handleSubmit" class="group flex flex-col gap-6" :class="formValidate" novalidate>
-  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
-    <div class="flex flex-col gap-1">
-      <input
-        type="text"
-        name="name"
-        class="peer input input-bordered input-accent placeholder-black placeholder-opacity-50"
-        placeholder="Name"
-        required
-        x-model="name"
-      />
+<div x-data="player">
+  <template x-if="showNameForm">
+    <form @submit.prevent="updateName" class="group flex flex-col gap-6" :class="formValidate" novalidate>
+      {t('onboarding.enter-your-name')}
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div class="flex flex-col gap-1">
+          <input
+            type="text"
+            name="name"
+            class="peer input input-bordered input-accent placeholder-black placeholder-opacity-50"
+            placeholder="Name"
+            required
+            x-model="name"
+          />
 
-      <div class="hidden text-sm text-error group-[.validate]:peer-invalid:block">"We need this"</div>
-    </div>
+          <div class="hidden text-sm text-error group-[.validate]:peer-invalid:block">"We need this"</div>
+        </div>
 
-    <div class="text-center">
-      <button
-        type="submit"
-        class="btn"
-        :class="submitButtonColor"
-        :disabled="submitButtonDisable"
-        x-html="submitButtonText">asdasd</button
-      >
+        <div class="text-center">
+          <button type="submit" class="btn btn-secondary" :disabled="!name">Go</button>
+        </div>
+      </div>
+    </form>
+  </template>
+  <template x-if="showAgeForm">
+    <form @submit.prevent="updateAge" class="group flex flex-col gap-6" :class="formValidate" novalidate>
+      {t('onboarding.enter-your-age')}
+      <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <div class="flex flex-col gap-1">
+          <input
+            type="text"
+            name="name"
+            class="peer input input-bordered input-accent placeholder-black placeholder-opacity-50"
+            placeholder="0-99"
+            required
+            x-model="age"
+          />
+
+          <div class="hidden text-sm text-error group-[.validate]:peer-invalid:block">"We need this"</div>
+        </div>
+
+        <div class="text-center">
+          <button type="submit" class="btn btn-secondary" :disabled="!name">Go</button>
+        </div>
+      </div>
+    </form>
+  </template>
+
+  <template x-if="showTopics">
+    <div class="flex-row items-center justify-center">
+      <div class="items-top flex justify-center">
+        <div class="mx-auto max-w-2xl">
+          <div class="flex flex-wrap justify-center gap-4">
+            {
+              topics.map((topic) => (
+                <label class="relative cursor-pointer">
+                  <input type="checkbox" value={topic.id} x-model="topics" class="peer sr-only" name="size-choice" />
+                  <span class="absolute right-2 top-2 z-10 opacity-0 transition-all peer-checked:opacity-100">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="fill-blue-500 stroke-white"
+                      width="32"
+                      height="32"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="#2c3e50"
+                      fill="none"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                      <circle cx="12" cy="12" r="9" />
+                      <path d="M9 12l2 2l4 -4" />
+                    </svg>
+                  </span>
+                  <div class="overflow-hidden rounded-lg bg-white shadow-md ring ring-transparent grayscale transition-all active:scale-95 peer-checked:ring-blue-500 peer-checked:grayscale-0">
+                    <div>
+                      <img
+                        src="https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+                        alt="Sofa 1"
+                        class="h-28 w-48 object-cover"
+                      />
+                    </div>
+                    <header class="px-2.5 py-2.5">
+                      <p
+                        class="text-lg font-bold tracking-wide
+                    text-gray-700"
+                      >
+                        {t(topic.translation_key)}
+                      </p>
+                    </header>
+                  </div>
+                </label>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+      <div class="flex justify-center p-6">
+        <button x-on:click="updateTopics" class="btn btn-secondary" :disabled="!name">Ready!</button>
+      </div>
     </div>
-  </div>
-</form>
+  </template>
+</div>

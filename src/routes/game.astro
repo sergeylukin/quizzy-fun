@@ -1,0 +1,17 @@
+---
+import DefaultLayout from '../layouts/DefaultLayout.astro'
+import { getLocale } from 'i18n:astro'
+import { useTranslations } from '../i18n/utils'
+import PlayerForm from '../components/game/player-form.astro'
+
+const locale = getLocale()
+const t = useTranslations(locale)
+---
+
+<DefaultLayout title="Home">
+  <section>
+    <div class="container">
+      <PlayerForm />
+    </div>
+  </section>
+</DefaultLayout>

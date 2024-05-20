@@ -1,15 +1,15 @@
 // import type { Alpine } from 'alpinejs'h
 // import Alpine from 'alpinejs'
 
-export default function () {
-  return {
-    // @ts-ignore
-    playerName: Alpine.$persist('').as('player-user'),
+export default () => ({
+  // @ts-ignore
+  playerName: Alpine.$persist('').as('player-name'),
 
-    // @ts-ignore
-    on: Alpine.$persist(true),
-    // playerName: '',
+  // @ts-ignore
+  playerAge: Alpine.$persist(null).as('player-age'),
 
-    items: ['first', 'second', 'third'],
-  }
-}
+  // @ts-ignore
+  playerTopics: Alpine.$persist([]).as('player-topics'),
+
+  items: ['first', 'second', 'third'],
+})

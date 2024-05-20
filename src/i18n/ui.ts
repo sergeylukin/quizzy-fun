@@ -1,5 +1,5 @@
-import english from '../locales/en/nav.json'
-import russian from '../locales/ru/nav.json'
+import english from '../locales/en/common.json'
+import russian from '../locales/ru/common.json'
 
 export const showDefaultLang = false
 

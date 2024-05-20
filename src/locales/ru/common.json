@@ -1,0 +1,15 @@
+{
+  "nav.start": "Начать!",
+  "onboarding.enter-your-name": "Выберите Имя",
+  "onboarding.enter-your-age": "Ваш возраст",
+  "game.topics.science": "Наука",
+  "game.topics.history": "История",
+  "game.topics.geography": "География",
+  "game.topics.mathematics": "Математика",
+  "game.topics.literature": "Литература",
+  "game.topics.technology": "Технология",
+  "game.topics.sports": "Спорт",
+  "game.topics.music": "Музыка",
+  "game.topics.movies": "Фильмы",
+  "game.topics.art": "Искусство"
+}

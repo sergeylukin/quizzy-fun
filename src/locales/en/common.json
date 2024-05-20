@@ -1,0 +1,15 @@
+{
+  "nav.start": "Start",
+  "onboarding.enter-your-name": "Enter your name",
+  "onboarding.enter-your-age": "Enter your age",
+  "game.topics.science": "Science",
+  "game.topics.history": "History",
+  "game.topics.geography": "Geography",
+  "game.topics.mathematics": "Mathematics",
+  "game.topics.literature": "Literature",
+  "game.topics.technology": "Technology",
+  "game.topics.sports": "Sports",
+  "game.topics.music": "Music",
+  "game.topics.movies": "Movies",
+  "game.topics.art": "Art"
+}
