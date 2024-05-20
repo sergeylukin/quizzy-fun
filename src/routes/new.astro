@@ -11,7 +11,15 @@ const t = useTranslations(locale)
   <section>
     <div class="container">
       {t('nav.start')}
+      <input x-model="name" x-data="{name: $persist('').as('player-name') }" type="text" />
       {locale}
     </div>
   </section>
 </DefaultLayout>
+
+<script>
+  import Alpine from 'alpinejs'
+  import persist from '@alpinejs/persist'
+  Alpine.plugin(persist)
+  Alpine.start()
+</script>
