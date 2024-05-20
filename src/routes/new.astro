@@ -2,6 +2,7 @@
 import DefaultLayout from '../layouts/DefaultLayout.astro'
 import { getLocale } from 'i18n:astro'
 import { useTranslations } from '../i18n/utils'
+import PlayerForm from '../components/game/player-form.astro'
 
 const locale = getLocale()
 const t = useTranslations(locale)
@@ -11,15 +12,40 @@ const t = useTranslations(locale)
   <section>
     <div class="container">
       {t('nav.start')}
-      <input x-model="name" x-data="{name: $persist('').as('player-name') }" type="text" />
+      {/*<input x-model="name" x-data="{name: $persist('').as('player-name') }" type="text" />*/}
+      {
+        /*     <div x-data="{ name: ''}">
+        <input x-model="name" type="text" />
+        <button x-text="$store.game.playerName = name">asdad</button>
+      </div>
       {locale}
+      <div x-data="{ quantity:0, price:0 }">
+        Quantity : <input type="text" x-model="quantity" />
+        <select x-model="price">
+          <option value="0">Select Size</option>
+          <option value="150">Small ($150)</option>
+          <option value="360">Medium ($360)</option>
+          <option value="890">Large ($890)</option>
+        </select>
+      </div>
+      asdasd*/
+      }
+      <PlayerForm />
     </div>
   </section>
 </DefaultLayout>
 
 <script>
-  import Alpine from 'alpinejs'
-  import persist from '@alpinejs/persist'
-  Alpine.plugin(persist)
-  Alpine.start()
+  /* import Alpine from 'alpinejs' */
+  /* import persist from '@alpinejs/persist' */
+  /* import player from '/src/assets/js/player.ts' */
+  /* import game from '/src/assets/js/game.ts' */
+  /* document.addEventListener('alpine:init', () => { */
+  /*   window.Alpine = Alpine */
+  /*   alert('asdasd') */
+  /*   Alpine.plugin(persist) */
+  /*   Alpine.data('player', player) */
+  /*   Alpine.store('game', game) */
+  /*   Alpine.start() */
+  /* }) */
 </script>
