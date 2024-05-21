@@ -16,8 +16,8 @@ const { topics } = game.data
 <div x-data="player">
   <template x-if="showNameForm">
     <form @submit.prevent="updateName" class="group flex flex-col gap-6" :class="formValidate" novalidate>
-      {t('onboarding.enter-your-name')}
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+        <p class="">{t('onboarding.enter-your-name')}:</p>
         <div class="flex flex-col gap-1">
           <input
             type="text"
@@ -31,31 +31,39 @@ const { topics } = game.data
           <div class="hidden text-sm text-error group-[.validate]:peer-invalid:block">"We need this"</div>
         </div>
 
-        <div class="text-center">
-          <button type="submit" class="btn btn-secondary" :disabled="!name">Go</button>
+        <div
+          class="fixed bottom-0 right-0 flex w-full justify-center border-t-4 border-indigo-500 bg-white bg-opacity-100 p-2 md:relative md:w-auto md:border-t-0 md:p-0"
+        >
+          <button type="submit" class="btn btn-secondary" :disabled="!name">Next</button>
         </div>
       </div>
     </form>
   </template>
   <template x-if="showAgeForm">
     <form @submit.prevent="updateAge" class="group flex flex-col gap-6" :class="formValidate" novalidate>
-      {t('onboarding.enter-your-age')}
+      <p>{t('onboarding.enter-your-age')}?</p>
       <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
         <div class="flex flex-col gap-1">
           <input
-            type="text"
+            type="number"
             name="name"
             class="peer input input-bordered input-accent placeholder-black placeholder-opacity-50"
             placeholder="0-99"
+            min="1"
+            max="99"
             required
             x-model="age"
           />
 
-          <div class="hidden text-sm text-error group-[.validate]:peer-invalid:block">"We need this"</div>
+          <div class="hidden text-sm text-error group-[.validate]:peer-invalid:block">
+            Enter valid number between 1-99
+          </div>
         </div>
 
-        <div class="text-center">
-          <button type="submit" class="btn btn-secondary" :disabled="!name">Go</button>
+        <div
+          class="fixed bottom-0 right-0 flex w-full justify-center border-t-4 border-indigo-500 bg-white bg-opacity-100 p-2 md:relative md:w-auto md:border-t-0 md:p-0"
+        >
+          <button type="submit" class="btn btn-secondary" :disabled="!age || age > 99 || age < 0">Next</button>
         </div>
       </div>
     </form>
@@ -65,7 +73,8 @@ const { topics } = game.data
     <div class="flex-row items-center justify-center">
       <div class="items-top flex justify-center">
         <div class="mx-auto max-w-2xl">
-          <div class="flex flex-wrap justify-center gap-4">
+          <p class="py-4">{t('onboarding.select-topics')}:</p>
+          <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
             {
               topics.map((topic) => (
                 <label class="relative cursor-pointer">
@@ -111,8 +120,10 @@ const { topics } = game.data
           </div>
         </div>
       </div>
-      <div class="flex justify-center p-6">
-        <button x-on:click="updateTopics" class="btn btn-secondary" :disabled="!name">Ready!</button>
+      <div
+        class="fixed bottom-0 right-0 flex w-full justify-center border-t-4 border-indigo-500 bg-white bg-opacity-80 p-2"
+      >
+        <button x-on:click="updateTopics" class="btn btn-secondary" :disabled="topics.length < 3">Ready!</button>
       </div>
     </div>
   </template>

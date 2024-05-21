@@ -2,6 +2,7 @@
   "nav.start": "Start",
   "onboarding.enter-your-name": "Enter your name",
   "onboarding.enter-your-age": "Enter your age",
+  "onboarding.select-topics": "Select at least 3 topics",
   "game.topics.science": "Science",
   "game.topics.history": "History",
   "game.topics.geography": "Geography",

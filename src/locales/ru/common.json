@@ -2,6 +2,7 @@
   "nav.start": "Начать!",
   "onboarding.enter-your-name": "Выберите Имя",
   "onboarding.enter-your-age": "Ваш возраст",
+  "onboarding.select-topics": "Выбери как минимум 3 темы",
   "game.topics.science": "Наука",
   "game.topics.history": "История",
   "game.topics.geography": "География",
