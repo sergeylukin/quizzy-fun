@@ -1,17 +1,26 @@
 ---
 import DefaultLayout from '../layouts/DefaultLayout.astro'
-import { getLocale } from 'i18n:astro'
-import { useTranslations } from '../i18n/utils'
 import PlayerForm from '../components/game/player-form.astro'
-
-const locale = getLocale()
-const t = useTranslations(locale)
+import Levels from '../components/game/levels.astro'
+import Questions from '../components/game/questions.astro'
+import Quiz from '../components/game/quiz.astro'
 ---
 
 <DefaultLayout title="Home">
   <section>
     <div class="container">
-      <PlayerForm />
+      <div x-data x-cloak x-show="$store.game.currentView == 'onboarding'">
+        <PlayerForm />
+      </div>
+      <div x-data x-cloak x-show="$store.game.currentView == 'levels'">
+        <Levels />
+      </div>
+      <div x-data x-cloak x-show="$store.game.currentView == 'questions'">
+        <Questions />
+      </div>
+      <div x-data x-cloak x-show="$store.game.currentView == 'quiz'">
+        <Quiz />
+      </div>
     </div>
   </section>
 </DefaultLayout>

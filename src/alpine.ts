@@ -10,13 +10,11 @@ export default (Alpine: Alpine) => {
     window.Alpine = Alpine
     Alpine.plugin(intersect)
 
-    if (!Alpine.$persist) {
-      Alpine.plugin(persist)
-    }
-    // Alpine.plugin(persist)
+    // if (!Alpine.$persist) {
+    Alpine.plugin(persist)
+    // }
 
     // Alpine.data("common", common);
-    console.log(player, 'PLAAAA')
     Alpine.store('game', game())
     Alpine.data('player', player)
     // Alpine.start()

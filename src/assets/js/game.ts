@@ -1,15 +1,27 @@
-// import type { Alpine } from 'alpinejs'h
-// import Alpine from 'alpinejs'
-
+// @ts-nocheck
+//
 export default () => ({
-  // @ts-ignore
   playerName: Alpine.$persist('').as('player-name'),
 
-  // @ts-ignore
   playerAge: Alpine.$persist(null).as('player-age'),
 
-  // @ts-ignore
   playerTopics: Alpine.$persist([]).as('player-topics'),
 
-  items: ['first', 'second', 'third'],
+  playerMaxReachedLevel: Alpine.$persist(1).as('player-max-reached-level'),
+
+  currentLevel: Alpine.$persist(null).as('current-level'),
+
+  currentQuestion: Alpine.$persist('').as('current-question'),
+
+  get currentView() {
+    console.log('level', this.currentLevel)
+    if (this.isNewPlayer()) return 'onboarding'
+    if (!this.currentLevel) return 'levels'
+    if (!this.currentQuestion) return 'questions'
+    return 'quiz'
+  },
+
+  isNewPlayer() {
+    return !this.playerName || !this.playerAge || !this.playerTopics.length
+  },
 })

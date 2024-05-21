@@ -17,15 +17,15 @@ export default function () {
     },
 
     updateName() {
-      Alpine.store('game').playerName = this.name
+      this.$store.game.playerName = this.name
     },
 
     updateAge() {
-      Alpine.store('game').playerAge = this.age
+      this.$store.game.playerAge = this.age
     },
 
     updateTopics() {
-      Alpine.store('game').playerTopics = this.topics
+      this.$store.game.playerTopics = this.topics
     },
   }
 }
