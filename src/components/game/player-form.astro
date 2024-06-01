@@ -1,4 +1,6 @@
 ---
+import type { ImageMetadata } from 'astro'
+import { Image } from 'astro:assets'
 import { getEntry, getCollection } from 'astro:content'
 import { getLocale } from 'i18n:astro'
 import { useTranslations } from '../../i18n/utils'
@@ -8,6 +10,10 @@ const t = useTranslations(locale)
 
 const game = await getEntry('common', 'game')
 const { topics } = game.data
+const images = import.meta.glob<{ default: ImageMetadata }>(
+  '/src/content/common/topics-covers/*.{webp,jpeg,jpg,png,gif}'
+)
+console.log(images)
 /* const categoriesCollection = await getCollection('common') */
 /* const categories = categoriesCollection.map((c) => c.name) */
 /* const categories = ['asasd', 'qqq'] */
@@ -76,46 +82,51 @@ const { topics } = game.data
           <p class="py-4">{t('onboarding.select-topics')}:</p>
           <div class="grid grid-cols-2 gap-4 md:grid-cols-3">
             {
-              topics.map((topic) => (
-                <label class="relative cursor-pointer">
-                  <input type="checkbox" value={topic.id} x-model="topics" class="peer sr-only" name="size-choice" />
-                  <span class="absolute right-2 top-2 z-10 opacity-0 transition-all peer-checked:opacity-100">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="fill-blue-500 stroke-white"
-                      width="32"
-                      height="32"
-                      viewBox="0 0 24 24"
-                      stroke-width="1.5"
-                      stroke="#2c3e50"
-                      fill="none"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    >
-                      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                      <circle cx="12" cy="12" r="9" />
-                      <path d="M9 12l2 2l4 -4" />
-                    </svg>
-                  </span>
-                  <div class="overflow-hidden rounded-lg bg-white shadow-md ring ring-transparent grayscale transition-all active:scale-95 peer-checked:ring-blue-500 peer-checked:grayscale-0">
-                    <div>
-                      <img
-                        src="https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
-                        alt="Sofa 1"
-                        class="h-28 w-48 object-cover"
-                      />
-                    </div>
-                    <header class="px-2.5 py-2.5">
-                      <p
-                        class="text-lg font-bold tracking-wide
-                    text-gray-700"
+              topics.map((topic) => {
+                const coverImagePath = `/src/content/common/topics-covers/${topic.id}.jpeg`
+                return (
+                  <label class="relative cursor-pointer">
+                    <input type="checkbox" value={topic.id} x-model="topics" class="peer sr-only" name="size-choice" />
+                    <span class="absolute right-2 top-2 z-10 opacity-0 transition-all peer-checked:opacity-100">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="fill-blue-500 stroke-white"
+                        width="32"
+                        height="32"
+                        viewBox="0 0 24 24"
+                        stroke-width="1.5"
+                        stroke="#2c3e50"
+                        fill="none"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
                       >
-                        {t(topic.translation_key)}
-                      </p>
-                    </header>
-                  </div>
-                </label>
-              ))
+                        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                        <circle cx="12" cy="12" r="9" />
+                        <path d="M9 12l2 2l4 -4" />
+                      </svg>
+                    </span>
+                    <div class="overflow-hidden rounded-lg bg-white shadow-md ring ring-transparent grayscale transition-all active:scale-95 peer-checked:ring-blue-500 peer-checked:grayscale-0">
+                      <div>
+                        {images[coverImagePath] && (
+                          <Image
+                            src={images[coverImagePath]()}
+                            alt={t(topic.translation_key)}
+                            class="h-28 w-48 object-cover"
+                          />
+                        )}
+                      </div>
+                      <header class="px-2.5 py-2.5">
+                        <p
+                          class="text-lg font-bold tracking-wide
+                    text-gray-700"
+                        >
+                          {t(topic.translation_key)}
+                        </p>
+                      </header>
+                    </div>
+                  </label>
+                )
+              })
             }
           </div>
         </div>
