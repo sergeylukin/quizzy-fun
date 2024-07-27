@@ -40,6 +40,8 @@
     "@astrojs/check": "^0.7.0",
     "@astrojs/ts-plugin": "^1.8.0",
     "@astrolicious/i18n": "^0.4.2",
+    "@fortawesome/fontawesome-svg-core": "^6.6.0",
+    "@fortawesome/free-solid-svg-icons": "^6.6.0",
     "@types/alpinejs": "^3.13.10",
     "alpinejs": "^3.13.10",
     "astro-htmx": "^1.0.5",

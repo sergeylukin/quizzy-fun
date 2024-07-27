@@ -1,16 +1,61 @@
 ---
+import { getEntry, getCollection } from 'astro:content'
+import { getLocale } from 'i18n:astro'
+import { useTranslations } from '../../i18n/utils'
+import { library, icon } from "@fortawesome/fontawesome-svg-core";
+import { faBasketball, faBook, faEarthAmericas, faFilm, faFlask, faLandmark, faMicrochip, faMountainSun, faMusic, faPalette, faSquareRootVariable } from "@fortawesome/free-solid-svg-icons";
+
+// Declare all the icons you plan on using
+library.add(faBasketball, faBook, faEarthAmericas, faFilm, faFlask, faLandmark, faMicrochip, faMountainSun, faMusic, faPalette, faSquareRootVariable);
+
+const icons = {
+  sport: icon({ prefix: "fas", iconName: faBasketball.iconName }),
+  literature: icon({ prefix: "fas", iconName: faBook.iconName }),
+  geography: icon({ prefix: "fas", iconName: faEarthAmericas.iconName }),
+  movies: icon({ prefix: "fas", iconName: faFilm.iconName }),
+  science: icon({ prefix: "fas", iconName: faFlask.iconName }),
+  history: icon({ prefix: "fas", iconName: faLandmark.iconName }),
+  technology: icon({ prefix: "fas", iconName: faMicrochip.iconName }),
+  nature: icon({ prefix: "fas", iconName: faMountainSun.iconName }),
+  music: icon({ prefix: "fas", iconName: faMusic.iconName }),
+  art: icon({ prefix: "fas", iconName: faPalette.iconName }),
+  mathematics: icon({ prefix: "fas", iconName: faSquareRootVariable.iconName }),
+}
+
+const locale = getLocale()
+const t = useTranslations(locale)
+
+const game = await getEntry('common', 'game')
+const { topics } = game.data
+const maxReachedLevel = 1
+const levels = [{ name: '1' }, { name: '2' }, { name: '3' }]
+const questionsCollection = await getCollection('questions')
+
+const questions = questionsCollection.filter((question) => {
+  const [lang, ...slug] = question.id.split('/')
+  return lang === locale
+  /* return { params: { lang, slug: slug.join('/') || undefined }, props: page }; */
+})
+console.log(questions)
+/* const categoriesCollection = await getCollection('common') */
+/* const categories = categoriesCollection.map((c) => c.name) */
+/* const categories = ['asasd', 'qqq'] */
 ---
 
 <ul class="mx-auto my-[10vh] min-w-[320px] max-w-[340px]">
-  <li class="text-l float-left m-2.5 h-10 w-10 rounded-xl bg-red-500 text-center leading-10 text-white"></li>
-  <li class="text-l float-left m-2.5 h-10 w-10 rounded-xl bg-red-500 text-center leading-10 text-white"></li>
-  <li class="text-l float-left m-2.5 h-10 w-10 rounded-xl bg-red-500 text-center leading-10 text-white"></li>
-  <li class="text-l float-left m-2.5 h-10 w-10 rounded-xl bg-red-500 text-center leading-10 text-white"></li>
-  <li class="text-l float-left m-2.5 h-10 w-10 rounded-xl bg-red-500 text-center leading-10 text-white"></li>
-  <li class="text-l float-left m-2.5 h-10 w-10 rounded-xl bg-red-500 text-center leading-10 text-white"></li>
-  <li class="text-l float-left m-2.5 h-10 w-10 rounded-xl bg-red-500 text-center leading-10 text-white"></li>
-  <li class="text-l float-left m-2.5 h-10 w-10 rounded-xl bg-red-500 text-center leading-10 text-white"></li>
-  <li class="text-l float-left m-2.5 h-10 w-10 rounded-xl bg-red-500 text-center leading-10 text-white"></li>
-  <li class="text-l float-left m-2.5 h-10 w-10 rounded-xl bg-red-500 text-center leading-10 text-white"></li>
-  <li class="text-l float-left m-2.5 h-10 w-10 rounded-xl bg-red-500 text-center leading-10 text-white"></li>
+    {questions.map((question, index) => {
+      const cls = `{
+        'bg-gray-200': $store.game.playerMaxReachedquestion < ${index+1},
+      }`;
+      const click = `$store.game.currentQuestion = ${index+1}`;
+      console.log('QUESTION', question)
+
+      return (
+        <li class="text-l float-left m-2.5 h-10 w-10 rounded-xl bg-red-500 text-center leading-10 text-white"
+           :class={cls}
+            x-on:click={click}>
+          <Fragment set:html={icons[question.data.topic.id].html} />
+        </li>
+      )
+    })
 </ul>
