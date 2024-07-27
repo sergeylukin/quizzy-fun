@@ -20,4 +20,6 @@ topics:
     translation_key: 'game.topics.movies'
   - id: art
     translation_key: 'game.topics.art'
+  - id: nature
+    translation_key: 'game.topics.nature'
 ---

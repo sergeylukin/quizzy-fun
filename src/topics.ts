@@ -9,4 +9,5 @@ export default [
   'Music',
   'Movies',
   'Art',
+  'Nature',
 ]
