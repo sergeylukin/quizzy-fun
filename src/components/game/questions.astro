@@ -36,24 +36,33 @@ const questions = questionsCollection.filter((question) => {
   return lang === locale
   /* return { params: { lang, slug: slug.join('/') || undefined }, props: page }; */
 })
+const questionsAsString = JSON.stringify(questions);
 console.log(questions)
 /* const categoriesCollection = await getCollection('common') */
 /* const categories = categoriesCollection.map((c) => c.name) */
 /* const categories = ['asasd', 'qqq'] */
 ---
 
-<ul class="mx-auto my-[10vh] min-w-[320px] max-w-[340px]">
+<ul class="mx-auto my-[10vh] min-w-[320px] max-w-[340px]"
+    x-data=`{
+      allQuestions: ${questionsAsString},
+      init() {
+    console.log('I am called automatically', this.$store.game.playerName)
+      }
+    }`
+  >
     {questions.map((question, index) => {
       const cls = `{
         'bg-gray-200': $store.game.playerMaxReachedquestion < ${index+1},
       }`;
-      const click = `$store.game.currentQuestion = ${index+1}`;
-      console.log('QUESTION', question)
+      const click = `$store.game.currentQuestion = Alpine.raw(allQuestions)[${index}].id`;
 
       return (
         <li class="text-l float-left m-2.5 h-10 w-10 rounded-xl bg-red-500 text-center leading-10 text-white"
            :class={cls}
-            x-on:click={click}>
+            x-on:click={click}
+            x-init=`$store.game.addQuestion(Alpine.raw(allQuestions)[${index}])`
+            >
           <Fragment set:html={icons[question.data.topic.id].html} />
         </li>
       )

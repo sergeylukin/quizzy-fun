@@ -13,6 +13,8 @@ export default () => ({
 
   currentQuestion: Alpine.$persist('').as('current-question'),
 
+  questions: Alpine.$persist('').as('questions'),
+
   get currentView() {
     console.log('level', this.currentLevel)
     if (this.isNewPlayer()) return 'onboarding'
@@ -23,5 +25,14 @@ export default () => ({
 
   isNewPlayer() {
     return !this.playerName || !this.playerAge || !this.playerTopics.length
+  },
+
+  addQuestion(question) {
+    this.questions = { ...this.questions, ...{ [question.id]: question } }
+    console.log('ADDING ', question)
+  },
+
+  getQuestion(id) {
+    return this.questions[id]
   },
 })

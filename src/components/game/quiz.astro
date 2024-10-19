@@ -1,4 +1,16 @@
 ---
 ---
 
-QUIZZZ
+<div class="text-l float-left m-2.5 rounded-xl p-4 text-center leading-10" x-data="question">
+  <h1 x-text="title"></h1>
+  <ul>
+    <template x-for="(answer, index) in answers">
+      <li>
+        <button @click=`answer.correct ? alert('YAY') : alert('NOOOO')`>
+          <span x-text="answer.title"></span>
+        </button>
+      </li>
+    </template>
+  </ul>
+  <button @click=`$store.game.currentQuestion = null;`>bAck</button>
+</div>

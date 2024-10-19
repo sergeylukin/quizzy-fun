@@ -4,6 +4,7 @@ import persist from '@alpinejs/persist'
 // import common from "./common";
 import player from './assets/js/player'
 import game from './assets/js/game'
+import question from './assets/js/question'
 
 export default (Alpine: Alpine) => {
   document.addEventListener('alpine:init', () => {
@@ -17,6 +18,7 @@ export default (Alpine: Alpine) => {
     // Alpine.data("common", common);
     Alpine.store('game', game())
     Alpine.data('player', player)
+    Alpine.data('question', question)
     // Alpine.start()
   })
 }
