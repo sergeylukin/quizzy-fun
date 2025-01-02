@@ -12,6 +12,7 @@ export default function () {
       console.log('title', this.question)
       return this.question.data.title
     },
+
     get answers() {
       this.question = this.$store.game.getQuestion(this.$store.game.currentQuestion)
       return this.question.data.answers
