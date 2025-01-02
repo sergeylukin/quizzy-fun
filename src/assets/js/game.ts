@@ -15,6 +15,8 @@ export default () => ({
 
   questions: Alpine.$persist('').as('questions'),
 
+  answers: Alpine.$persist([]).as('answers'),
+
   get currentView() {
     console.log('level', this.currentLevel)
     if (this.isNewPlayer()) return 'onboarding'
@@ -34,5 +36,13 @@ export default () => ({
 
   getQuestion(id) {
     return this.questions[id]
+  },
+
+  setAnswer(question, answer) {
+    this.answers = { ...this.answers, ...{ [question.id]: answer } }
+  },
+
+  getAnswer(questionId) {
+    return this.answers.hasOwnProperty(questionId);
   },
 })
