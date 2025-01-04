@@ -13,9 +13,9 @@ export default () => ({
 
   currentQuestion: Alpine.$persist('').as('current-question'),
 
-  questions: Alpine.$persist('').as('questions'),
+  questions: Alpine.$persist({}).as('questions'),
 
-  answers: Alpine.$persist('').as('answers'),
+  selectedAnswers: Alpine.$persist({}).as('answers'),
 
   get currentView() {
     console.log('level', this.currentLevel)
@@ -26,7 +26,7 @@ export default () => ({
   },
 
   setAnswer(question, answer) {
-    this.answers = { ...this.answers, ...{ [question.id]: answer } }
+    this.selectedAnswers = { ...this.selectedAnswers, ...{ [question.id]: answer } }
   },
 
   isNewPlayer() {
@@ -42,7 +42,11 @@ export default () => ({
     return this.questions[id]
   },
 
-  getAnswer(questionId) {
-    return this.answers.hasOwnProperty(questionId)
+  getSelectedAnswer(questionId) {
+    return this.selectedAnswers.hasOwnProperty(questionId) ? this.selectedAnswers[questionId] : null
+  },
+
+  resetQuestion() {
+    this.currentQuestion = null
   },
 })

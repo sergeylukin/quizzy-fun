@@ -6,7 +6,13 @@
   <ul>
     <template x-for="(answer, index) in answers">
       <li>
-        <button @click=`$store.game.setAnswer(question, answer)`>
+        <button
+          @click=`!isAnswered && setAnswer(answer)`
+          :class=`{
+            'bg-green-500':  isAnswered && answer.correct,
+            'bg-red-500':  isAnswered && !selectedAnswer.correct && answer === selectedAnswer
+          }`
+        >
           <span x-text="answer.title"></span>
         </button>
       </li>
@@ -14,8 +20,8 @@
   </ul>
   <div
     class="fixed bottom-0 right-0 flex w-full justify-center border-t-4 border-fuchsia-300 bg-white bg-opacity-100 p-2"
-    x-show=`$store.game.getAnswer(question.id)`
+    x-show=`isAnswered`
   >
-    <button @click=`$store.game.currentQuestion = null;` class="btn btn-secondary">NEXT</button>
+    <button @click=`$store.game.resetQuestion()` class="btn btn-secondary">NEXT</button>
   </div>
 </div>

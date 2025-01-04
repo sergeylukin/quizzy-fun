@@ -17,5 +17,17 @@ export default function () {
       this.question = this.$store.game.getQuestion(this.$store.game.currentQuestion)
       return this.question.data.answers
     },
+
+    get isAnswered() {
+      return !!this.$store.game.getSelectedAnswer(this.$store.game.currentQuestion)
+    },
+
+    get selectedAnswer() {
+      return this.$store.game.getSelectedAnswer(this.$store.game.currentQuestion)
+    },
+
+    setAnswer(answer) {
+      this.$store.game.setAnswer(this.question, answer)
+    },
   }
 }
